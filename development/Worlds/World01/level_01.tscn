@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=4 uid="uid://dqjk0j7xd3j85"]
+[gd_scene load_steps=6 format=4 uid="uid://dqjk0j7xd3j85"]
 
 [ext_resource type="PackedScene" uid="uid://dixrtr77gevg4" path="res://WorldBuilding/TileSets/world_tile_set.tscn" id="1_kuxrs"]
 [ext_resource type="PackedScene" uid="uid://dxnmaihe81hdn" path="res://General/HurtBox/hurt_box.tscn" id="2_b2hmj"]
 [ext_resource type="PackedScene" uid="uid://dcfam8ohsbff" path="res://WorldBuilding/Enemies/enemy.tscn" id="3_iqug4"]
+[ext_resource type="PackedScene" uid="uid://btu8wjsx7xkkn" path="res://WorldBuilding/Platforms/platform.tscn" id="4_01f0b"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f57u1"]
 
@@ -33,3 +34,7 @@ position = Vector2(152, 0)
 
 [node name="Enemy2" parent="Enemies" instance=ExtResource("3_iqug4")]
 position = Vector2(-128, 0)
+
+[node name="Platform" parent="." instance=ExtResource("4_01f0b")]
+position = Vector2(200, -16)
+type = 0

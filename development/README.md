@@ -109,6 +109,7 @@ This will be done by creating a reusable tilemap, then using that to build level
 	- Set Zoom to 4:4
 	- Position the ``Camera2D`` nicely over the player
 	- Run the game; the camera should follow the player
+	- In project settings, set display window stretch mode to viewport
 
 
 
@@ -284,6 +285,44 @@ We will be creating a hit/hurtbox system allowing the player to get hurt/die, en
 
 # Improve Levels
 - Add Platforms; added folder, scene and script - going to make this a tool so type and width can be set in level editor, rather than multiple scenes
+	```
+	@tool
+	class_name Platform extends Node2D
+
+	@onready var sprite: Sprite2D = $Sprite2D
+
+	enum TYPE {Grass, Sand, Lava, Ice}
+	enum WIDTH {Narrow, Wide}
+
+	@export var width: WIDTH = WIDTH.Wide :
+		set(_v):
+			width = _v
+			_update_sprite()
+			
+	@export var type: TYPE = TYPE.Grass :
+		set(_v):
+			type = _v
+			_update_sprite()
+			
+
+	# Called when the node enters the scene tree for the first time.
+	func _ready() -> void:
+		_update_sprite()
+
+	# Called every frame. 'delta' is the elapsed time since the previous frame.
+	func _process(delta: float) -> void:
+		pass
+
+
+	func _update_sprite() -> void:
+		sprite.region_rect.size.x = 16 * (platform_width + 1)
+		sprite.region_rect.position.x = 0 if platform_width==0 else 16
+		sprite.region_rect.position.y = (type + 1) * 16 - 16
+		print(sprite.region_rect)
+
+		
+	```
+
 - Set Camera Limits
 - Add Portals (and more levels)
 

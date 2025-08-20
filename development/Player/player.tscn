@@ -48,10 +48,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8berr"]
-size = Vector2(8, 13)
+size = Vector2(8, 10.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2s3j8"]
-size = Vector2(6, 1)
+size = Vector2(8, 3.5)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_jcgt5")
@@ -80,7 +80,7 @@ zoom = Vector2(4, 4)
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-position = Vector2(0, -6.5)
+position = Vector2(0, -8.125)
 shape = SubResource("RectangleShape2D_8berr")
 debug_color = Color(0.787986, 0.307318, 0.762578, 0.42)
 
@@ -88,5 +88,5 @@ debug_color = Color(0.787986, 0.307318, 0.762578, 0.42)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 0.5)
+position = Vector2(0, 2.25)
 shape = SubResource("RectangleShape2D_2s3j8")
