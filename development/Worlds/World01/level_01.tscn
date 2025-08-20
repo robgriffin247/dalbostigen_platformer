@@ -26,8 +26,10 @@ position = Vector2(0, 24)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 shape = SubResource("WorldBoundaryShape2D_f57u1")
 
-[node name="Enemy" parent="." instance=ExtResource("3_iqug4")]
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Enemy" parent="Enemies" instance=ExtResource("3_iqug4")]
 position = Vector2(152, 0)
 
-[node name="Enemy2" parent="." instance=ExtResource("3_iqug4")]
+[node name="Enemy2" parent="Enemies" instance=ExtResource("3_iqug4")]
 position = Vector2(-128, 0)

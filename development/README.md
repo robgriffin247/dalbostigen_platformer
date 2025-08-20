@@ -56,7 +56,19 @@ This will require a player scene, player script, and a playground scene to place
 		- Player should now land on the (invisible) boundary and can walk/jump
 	- Now delete the ``StaticBody2D`` node; the next step is to build a world
 
+<!--
 
+1. Improve the player
+	-
+
+# Improve the Player
+- Animations
+- Direction flip
+- State machine
+- Set ``SPEED`` to ``100.0``
+- Set ``JUMP_VELOCITY`` to ``-320.0``
+
+-->
 
 # Worldbuilding
 
@@ -230,38 +242,48 @@ We will be creating a hit/hurtbox system allowing the player to get hurt/die, en
 			position.x += 40 * delta * direction
 			if ray_cast.is_colliding():
 				direction *= -1
-				scale.x *= -1
+				scale.x *= direction
 		```
 	- Set CollisionMask of RayCast2D to layer 3 (enemy)
 	- Add Physics Layers/Collision Layer to 3 in world_tile_set scene
 
- -->
-	kill enemies;
-	- add hurtbox to player and collision shape
-	- add hitbox to enemy and collision shape
-	- add to enemy script to connect a take_hit function on ready and to execute when hit_box emits hit signal (needs hp and onready var)
-	- add an animation (queue_free() the hurtbox at 0, queue_free() the enemy at the end, sprites and fade to suit + direction to 0 in code)
+1. Make enemies killable
+	- Add a hurtbox to the player and set mask to the enemy layer
+	- Add a collision shape to the player hurtbox
+	- Add a hitbox to the enemy, and a suitable collision shape
+	- Add an animation to the enemy animation player
+		- queue_free() the hurtbox at 0s
+		- queue_free() the enemy at the end
+		- Add sprites and fade to suit
+	- Add the following to the enemy script to create references to the hitbox and animation player, give the enemy hp, connect the hitbox hit signal, and create a take_hit function
 	
-<!--
+		```
+		@onready var hit_box: HitBox = $HitBox
+		@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-# Dying
-[x] HurtBox/HitBox
-[x] GameOver screen
-[ ] Enemies
+		var hp : int = 1
+
+		func _ready() -> void:
+			hit_box.hit.connect(_take_hit)
+
+
+		func _take_hit(_damage: int) -> void:
+			hp -= _damage
+			if hp<=0:
+				direction = 0
+				animation_player.play("die")
+		```
+	
+
+
+<!--
 
 # Pickups
 - Add coin pickup
 - HUD
 
-# Improve the Player
-- Animations
-- Direction flip
-- State machine
-- Set ``SPEED`` to ``100.0``
-- Set ``JUMP_VELOCITY`` to ``-320.0``
-
 # Improve Levels
-- Add Platforms
+- Add Platforms; added folder, scene and script - going to make this a tool so type and width can be set in level editor, rather than multiple scenes
 - Set Camera Limits
 - Add Portals (and more levels)
 
