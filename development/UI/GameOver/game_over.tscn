@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://bf2mq2ugfq16y"]
+
+[ext_resource type="PackedScene" uid="uid://cbfsasi4jc66u" path="res://UI/Labels/label_regular.tscn" id="1_beqce"]
+[ext_resource type="Script" path="res://UI/GameOver/game_over.gd" id="1_vm81l"]
+[ext_resource type="PackedScene" uid="uid://cj5pkxpixmn1s" path="res://UI/Buttons/button_regular.tscn" id="2_tnpkk"]
+
+[node name="GameOver" type="CanvasLayer"]
+script = ExtResource("1_vm81l")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+modulate = Color(0, 0, 0, 0.709804)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" parent="Control" instance=ExtResource("1_beqce")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -11.5
+offset_right = 31.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "GAME OVER"
+
+[node name="RetryButton" parent="Control" instance=ExtResource("2_tnpkk")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.5
+offset_top = 116.0
+offset_right = 21.5
+offset_bottom = 132.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "RETRY"
