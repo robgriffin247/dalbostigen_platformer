@@ -1,14 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://btu8wjsx7xkkn"]
+[gd_scene load_steps=4 format=3 uid="uid://btu8wjsx7xkkn"]
 
 [ext_resource type="Script" path="res://WorldBuilding/Platforms/platform.gd" id="1_lunti"]
 [ext_resource type="Texture2D" uid="uid://d0bklm7mk5jgw" path="res://Assets/Sprites/platforms.png" id="2_sfmx5"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gi4j6"]
+size = Vector2(32, 9)
+
 [node name="Platform" type="AnimatableBody2D"]
 script = ExtResource("1_lunti")
-width = null
-type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sfmx5")
 region_enabled = true
-region_rect = Rect2(16, 48, 32, 9)
+region_rect = Rect2(16, 0, 32, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gi4j6")
+one_way_collision = true
+debug_color = Color(0.934591, 0.20352, 0.40026, 0.42)

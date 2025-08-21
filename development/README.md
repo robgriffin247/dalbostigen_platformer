@@ -284,44 +284,56 @@ We will be creating a hit/hurtbox system allowing the player to get hurt/die, en
 - HUD
 
 # Improve Levels
-- Add Platforms; added folder, scene and script - going to make this a tool so type and width can be set in level editor, rather than multiple scenes
-	```
-	@tool
-	class_name Platform extends Node2D
+- Add Platforms; 
+	- added folder, scene and script 
+	- add sprite, spritesheet and collisionshape
+	- one way collision
+	- add animation player (tool will set start and finish positions)
+	- add code:
+	
+		```
+		@tool
+		class_name Platform extends Node2D
 
-	@onready var sprite: Sprite2D = $Sprite2D
+		@onready var sprite: Sprite2D = $Sprite2D
+		@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
-	enum TYPE {Grass, Sand, Lava, Ice}
-	enum WIDTH {Narrow, Wide}
+		var _width: int
 
-	@export var width: WIDTH = WIDTH.Wide :
-		set(_v):
-			width = _v
-			_update_sprite()
+		enum TYPE {Grass, Sand, Lava, Ice}
+		enum WIDTH {Narrow, Wide}
+
+		@export var width: WIDTH = WIDTH.Wide :
+			set(_v):
+				width = _v
+				_update_platform_width()
+				
+		@export var type: TYPE = TYPE.Grass :
+			set(_v):
+				type = _v
+				_update_platform_type()
+
+
+		func _ready() -> void:
+			_update_platform_width()
+			_update_platform_type()
 			
-	@export var type: TYPE = TYPE.Grass :
-		set(_v):
-			type = _v
-			_update_sprite()
+
+		func _update_platform_width() -> void:
+			var _width = 16 * (width + 1)
 			
-
-	# Called when the node enters the scene tree for the first time.
-	func _ready() -> void:
-		_update_sprite()
-
-	# Called every frame. 'delta' is the elapsed time since the previous frame.
-	func _process(delta: float) -> void:
-		pass
+			if collision_shape:
+				collision_shape.shape.set_size(Vector2(_width, 9))
+			
+			if sprite:
+				sprite.region_rect.size.x = _width
+				sprite.region_rect.position.x = 0 if width == 0 else 16
 
 
-	func _update_sprite() -> void:
-		sprite.region_rect.size.x = 16 * (platform_width + 1)
-		sprite.region_rect.position.x = 0 if platform_width==0 else 16
-		sprite.region_rect.position.y = (type + 1) * 16 - 16
-		print(sprite.region_rect)
-
-		
-	```
+		func _update_platform_type() -> void:
+			if sprite:
+				sprite.region_rect.position.y = (type + 1) * 16 - 16
+		```
 
 - Set Camera Limits
 - Add Portals (and more levels)
