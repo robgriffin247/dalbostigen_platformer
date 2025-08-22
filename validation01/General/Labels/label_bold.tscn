@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cg1mdd5dykjds"]
+
+[ext_resource type="FontFile" uid="uid://chu42ji3miv0h" path="res://Assets/Fonts/PixelOperator8-Bold.ttf" id="1_310ei"]
+
+[node name="Label" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_310ei")
+theme_override_font_sizes/font_size = 8
+horizontal_alignment = 1
+vertical_alignment = 1

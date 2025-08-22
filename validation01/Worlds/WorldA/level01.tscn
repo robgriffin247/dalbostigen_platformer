@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=4 uid="uid://b4hio868ncffd"]
+
+[ext_resource type="PackedScene" uid="uid://bf7wo7pvsjsiq" path="res://WorldBuilding/TileSets/world_tile_set.tscn" id="1_ssx7d"]
+[ext_resource type="PackedScene" uid="uid://dgfabtukbbvl5" path="res://WorldBuilding/Enemies/Slime/slime.tscn" id="2_kk2x0"]
+[ext_resource type="PackedScene" uid="uid://bgmefg8dwroyh" path="res://General/HurtBox/hurt_box.tscn" id="2_q465v"]
+[ext_resource type="PackedScene" uid="uid://nwjhqe65sb7m" path="res://WorldBuilding/Pickups/Coin/coin.tscn" id="4_0v0x5"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8bvjv"]
+
+[node name="Level" type="Node2D"]
+
+[node name="HurtBox" parent="." instance=ExtResource("2_q465v")]
+position = Vector2(0, 48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("WorldBoundaryShape2D_8bvjv")
+
+[node name="TileSets" type="Node2D" parent="."]
+
+[node name="Background" parent="TileSets" instance=ExtResource("1_ssx7d")]
+
+[node name="Midground" parent="TileSets" instance=ExtResource("1_ssx7d")]
+tile_map_data = PackedByteArray("AAD7/wAAAAAAAAAAAAD8/wAAAAAAAAAAAAD9/wAAAAAAAAAAAAD+/wAAAAAAAAAAAAD//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAP//AAAAAAAAAAAGAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAJAAAAAAAAAAAAAAAKAP//AAAAAAAAAAAFAAAAAAAAAAEAAAAKAAAAAAAAAAEAAAA=")
+
+[node name="Foreground" parent="TileSets" instance=ExtResource("1_ssx7d")]
+z_index = 100
+
+[node name="Slime" parent="." instance=ExtResource("2_kk2x0")]
+position = Vector2(112, 0)
+
+[node name="Coin" parent="." instance=ExtResource("4_0v0x5")]
+position = Vector2(-48, -8)

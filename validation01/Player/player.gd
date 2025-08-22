@@ -1,16 +1,18 @@
 class_name Player extends CharacterBody2D
 
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hit_box: HitBox = $HitBox
 
-const SPEED = 80.0
-const JUMP_VELOCITY = -260.0
+var hp: int
+var max_hp := 1
 
-var max_hp : int = 1
-var hp : int
+const SPEED = 90.0
+const JUMP_VELOCITY = -280.0
 
 func _ready() -> void:
-	hp = max_hp
 	hit_box.hit.connect(_take_hit)
+	hp = max_hp
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -22,19 +24,24 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("left", "right")
+	
+	sprite.scale.x = direction if direction != 0 else sprite.scale.x
+	
+	if direction == 0:
+		animation_player.play("idle")
+	if direction != 0:
+		animation_player.play("run")
+		
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-
+	
 	move_and_slide()
-
 
 func _take_hit(_damage: int) -> void:
 	hp -= _damage
-	if hp<=0:
-		#GameOver.show()
-		GameOver.animation_player.play("show")
+	if hp <= 0:
+		GameOver.show()
 		hp = max_hp

@@ -444,4 +444,5 @@ func _update_animation():
 - Main menu
 - High scores
 
+Add - animation_play and show animation/take away GameOver.show()
 -->
