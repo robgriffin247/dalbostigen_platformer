@@ -367,6 +367,76 @@ func _update_animation():
 		```
 
 - Set Camera Limits
+	- add playercamera script to camera
+	```
+	class_name PlayerCamera extends Camera2D
+
+	func _ready() -> void:
+		LevelManager.level_bounds_changed.connect(_update_limits)
+		_update_limits(LevelManager.current_level_bounds)
+
+	func _update_limits(bounds: Array[Vector2]) -> void:
+		if bounds == []:
+			return
+			
+		limit_left = int(bounds[0].x)
+		limit_top = int(bounds[0].y)
+		limit_right = int(bounds[1].x)
+		limit_bottom = int(bounds[1].y)
+	```
+	
+	- add autoload for level_manager
+	```
+	extends Node
+
+	var current_level_bounds: Array[Vector2]
+
+	signal level_bounds_changed(bounds: Array[Vector2])
+
+	func change_level_bounds(bounds: Array[Vector2]) -> void:
+		current_level_bounds = bounds
+		level_bounds_changed.emit(bounds)
+	```
+	- add tiles script to node containing all tilemap layers in level(s)
+	```
+	class_name Tiles extends Node2D
+
+	func _ready() -> void:
+		LevelManager.change_level_bounds(get_tilemap_bounds())
+
+	func get_tilemap_bounds() -> Array[Vector2]:
+		var bounds : Array[Vector2] = []
+		
+		var position_limits: Vector2
+		var end_limits: Vector2
+		var tile_size: int
+		
+		for c in get_children():
+			if c is TileMapLayer:
+				if c.get_used_rect().position.x < position_limits.x or position_limits == null:
+					position_limits.x = c.get_used_rect().position.x
+				if c.get_used_rect().position.y < position_limits.y or position_limits == null:
+					position_limits.y = c.get_used_rect().position.y
+				if c.get_used_rect().end.x > end_limits.x or end_limits == null:
+					end_limits.x = c.get_used_rect().end.x
+				if c.get_used_rect().end.y > end_limits.y or end_limits == null:
+					end_limits.y = c.get_used_rect().end.y
+				
+				tile_size = c.rendering_quadrant_size
+
+		bounds.append(
+			Vector2(position_limits * tile_size)
+		)
+		
+		bounds.append(
+			Vector2(end_limits * tile_size)
+		)
+
+		return bounds
+
+	```
+	
+	
 - Add Portals (and more levels)
 
 # Other

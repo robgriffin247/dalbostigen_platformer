@@ -1,12 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://3k8gq41lpk28"]
+[gd_scene load_steps=12 format=3 uid="uid://3k8gq41lpk28"]
 
 [ext_resource type="Texture2D" uid="uid://cwsnmr6cms3at" path="res://Assets/Sprites/player.png" id="1_cbiuq"]
 [ext_resource type="Script" path="res://Player/player.gd" id="1_jcgt5"]
 [ext_resource type="PackedScene" uid="uid://dd6v24rlc8g4r" path="res://General/HitBox/hit_box.tscn" id="3_22d4v"]
+[ext_resource type="Script" path="res://Player/player_camera.gd" id="3_gip2l"]
 [ext_resource type="PackedScene" uid="uid://dxnmaihe81hdn" path="res://General/HurtBox/hurt_box.tscn" id="4_bmc2h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_em277"]
-size = Vector2(8, 13)
+size = Vector2(10, 14)
 
 [sub_resource type="Animation" id="Animation_ed3w5"]
 length = 0.001
@@ -48,7 +49,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8berr"]
-size = Vector2(8, 10.25)
+size = Vector2(10, 10.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2s3j8"]
 size = Vector2(8, 3.5)
@@ -63,7 +64,7 @@ hframes = 8
 vframes = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -6.5)
+position = Vector2(0, -7)
 shape = SubResource("RectangleShape2D_em277")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -75,6 +76,7 @@ autoplay = "idle"
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(36, -29)
 zoom = Vector2(4, 4)
+script = ExtResource("3_gip2l")
 
 [node name="HitBox" parent="." instance=ExtResource("3_22d4v")]
 collision_layer = 2
@@ -88,5 +90,5 @@ debug_color = Color(0.787986, 0.307318, 0.762578, 0.42)
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 2.25)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_2s3j8")

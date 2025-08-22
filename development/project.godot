@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+LevelManager="*res://Managers/level_manager.gd"
 GameOver="*res://UI/GameOver/game_over.tscn"
 
 [display]
