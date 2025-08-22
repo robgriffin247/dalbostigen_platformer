@@ -73,7 +73,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(40, -48)
+position = Vector2(36, -29)
 zoom = Vector2(4, 4)
 
 [node name="HitBox" parent="." instance=ExtResource("3_22d4v")]

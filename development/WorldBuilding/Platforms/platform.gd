@@ -33,9 +33,10 @@ enum SPEED {Static, Slow, Normal, Fast}
 
 
 func _ready() -> void:
+	_update_position()
+	_update_animation()
 	_update_type()
 	_update_width()
-	_update_animation()
 
 func _update_position():
 	global_position = start_position
