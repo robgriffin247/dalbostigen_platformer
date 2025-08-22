@@ -195,3 +195,8 @@
 # Pickups
 
 - Add Coin Area2d scene
+
+
+# Camera Limits
+
+# Platforms

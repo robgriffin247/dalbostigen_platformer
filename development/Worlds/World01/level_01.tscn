@@ -51,7 +51,7 @@ end_position = Vector2(552, -256)
 [node name="Pickups" type="Node2D" parent="."]
 
 [node name="Coin" parent="Pickups" instance=ExtResource("5_2t4oh")]
-position = Vector2(56, -16)
+position = Vector2(56, -8)
 
 [node name="Coin2" parent="Pickups" instance=ExtResource("5_2t4oh")]
-position = Vector2(-24, -16)
+position = Vector2(-24, -8)
