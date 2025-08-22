@@ -1,13 +1,55 @@
-[gd_scene load_steps=4 format=3 uid="uid://btu8wjsx7xkkn"]
+[gd_scene load_steps=7 format=3 uid="uid://btu8wjsx7xkkn"]
 
-[ext_resource type="Script" path="res://WorldBuilding/Platforms/platform.gd" id="1_lunti"]
+[ext_resource type="Script" path="res://WorldBuilding/Platforms/platform.gd" id="1_hmpao"]
 [ext_resource type="Texture2D" uid="uid://d0bklm7mk5jgw" path="res://Assets/Sprites/platforms.png" id="2_sfmx5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gi4j6"]
+resource_local_to_scene = true
 size = Vector2(32, 9)
 
+[sub_resource type="Animation" id="Animation_ebxvp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ohryq"]
+resource_local_to_scene = true
+resource_name = "move"
+length = 0.001
+loop_mode = 2
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_76w10"]
+resource_local_to_scene = true
+_data = {
+"RESET": SubResource("Animation_ebxvp"),
+"move": SubResource("Animation_ohryq")
+}
+
 [node name="Platform" type="AnimatableBody2D"]
-script = ExtResource("1_lunti")
+script = ExtResource("1_hmpao")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sfmx5")
@@ -18,3 +60,9 @@ region_rect = Rect2(16, 0, 32, 9)
 shape = SubResource("RectangleShape2D_gi4j6")
 one_way_collision = true
 debug_color = Color(0.934591, 0.20352, 0.40026, 0.42)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_76w10")
+}
+autoplay = "move"

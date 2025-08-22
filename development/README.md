@@ -287,52 +287,83 @@ We will be creating a hit/hurtbox system allowing the player to get hurt/die, en
 - Add Platforms; 
 	- added folder, scene and script 
 	- add sprite, spritesheet and collisionshape
-	- one way collision
-	- add animation player (tool will set start and finish positions)
+	- one way collision and resource/local_to_scene
+	- add animation player, move animation with two keys on platform position
+	- set animationplayer/libraries/resource and move/resource (view move animation in inspector) local to scene
 	- add code:
 	
 		```
-		@tool
-		class_name Platform extends Node2D
-
-		@onready var sprite: Sprite2D = $Sprite2D
-		@onready var collision_shape: CollisionShape2D = $CollisionShape2D
-
-		var _width: int
-
-		enum TYPE {Grass, Sand, Lava, Ice}
-		enum WIDTH {Narrow, Wide}
-
-		@export var width: WIDTH = WIDTH.Wide :
-			set(_v):
-				width = _v
-				_update_platform_width()
-				
-		@export var type: TYPE = TYPE.Grass :
-			set(_v):
-				type = _v
-				_update_platform_type()
+@tool
+class_name Platform extends Node2D
 
 
-		func _ready() -> void:
-			_update_platform_width()
-			_update_platform_type()
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+
+enum TYPE {Grass, Sand, Lava, Ice}
+enum WIDTH {Narrow, Wide}
+enum SPEED {Static, Slow, Normal, Fast}
+
+@export var type: TYPE = TYPE.Grass :
+	set(_t):
+		type = _t
+		_update_type()
+
+
+@export var width: WIDTH = WIDTH.Wide :
+	set(_w):
+		width = _w
+		_update_width()
+
+@export var start_position: Vector2 = Vector2.ZERO:
+	set(_s):
+		start_position = _s
+		_update_position()
+		
+@export var end_position: Vector2 = Vector2.ZERO
+
+@export var speed : SPEED = SPEED.Normal
+
+
+func _ready() -> void:
+	_update_type()
+	_update_width()
+	_update_animation()
+
+func _update_position():
+	global_position = start_position
+	
+func _update_type() -> void:
+	if sprite:
+		sprite.region_rect.position.y = (type + 1) * 16 - 16
+
+
+func _update_width() -> void:
+	if sprite:
+		sprite.region_rect.size.x = 16 * (width + 1)
+		sprite.region_rect.position.x = 0 if width == 0 else 16
+
+	if collision_shape:
+		collision_shape.shape.size.y = 9
+		collision_shape.shape.size.x = 16 * (width + 1)
+
+
+func _update_animation():
+	if animation_player:
+		var _move_duration = 0.0 if speed == SPEED.Static else start_position.distance_to(end_position) / (speed * 20)
+		
+		animation_player.get_animation("move").set("length", _move_duration)
+		
+		if animation_player.get_animation("move").track_get_key_count(0) == 1:
+			animation_player.get_animation("move").track_insert_key(0, 0.0, start_position, 1.0)
 			
-
-		func _update_platform_width() -> void:
-			var _width = 16 * (width + 1)
-			
-			if collision_shape:
-				collision_shape.shape.set_size(Vector2(_width, 9))
-			
-			if sprite:
-				sprite.region_rect.size.x = _width
-				sprite.region_rect.position.x = 0 if width == 0 else 16
+		if speed>0:
+			animation_player.get_animation("move").track_insert_key(0, _move_duration, end_position, 1.0)
+		
 
 
-		func _update_platform_type() -> void:
-			if sprite:
-				sprite.region_rect.position.y = (type + 1) * 16 - 16
 		```
 
 - Set Camera Limits
